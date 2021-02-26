@@ -10,34 +10,34 @@ def scale_x_y(lat, long, latLongDataFrame):
     try:
 
         # Get the maximum and minimum values of the Latitude and Longitude columns.
-        maxX = latLongDataFrame['Longitude'].max()
-        minX = latLongDataFrame['Longitude'].min()
-        maxY = latLongDataFrame['Latitude'].max()
-        minY = latLongDataFrame['Latitude'].min()
+        maxX = latLongDataFrame['Latitude'].max()
+        minX = latLongDataFrame['Latitude'].min()
+        maxY = latLongDataFrame['Longitude'].max()
+        minY = latLongDataFrame['Longitude'].min()
 
         # The absolute value of the maximum longitude - minimum longitude.
-        W = abs(maxX - minX)
+        W = abs(maxY - minY)
 
         # The absolute value of the maximum longitude - minimum longitude.
-        L = abs(maxY - minY)
+        L = abs(maxX - minX)
 
         # Obtain the larger side (be it length or width).
         B = max(W, L)
 
         # The total width of square in Unreal Units that we are scaling points to fill.
-        D = 3000
+        D = 8000
 
         # The scale factor.
         a = D / B
 
         # Determines how far we need to shift the center of the scaled bounding rectangle so that it exists on the
         # origin.
-        xOffset = a * minX + (a * W) / 2
-        yOffset = a * minY + (a * L) / 2
+        xOffset = a * minY + (a * L) / 2
+        yOffset = a * minX + (a * W) / 2
 
         # The final scaled x and y points.
-        x = a * long - xOffset
-        y = a * lat - yOffset
+        x = a * lat - yOffset
+        y = a * long - xOffset
 
         return x, y
 
